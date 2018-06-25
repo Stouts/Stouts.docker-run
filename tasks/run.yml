@@ -1,0 +1,46 @@
+---
+
+- name: Ensure that host mount directories are exists
+  file:
+    state: directory
+    path: "{{ item }}"
+  with_items: "{{ docker_run_mounts }}"
+
+- name: Ensure that docker volumes are exists
+  docker_volume:
+    name: "{{ item.name|default(item) }}"
+    force: "{{ item.force|default(omit) }}"
+  with_items: "{{ docker_run_volumes }}"
+
+- name: Ensure that docker is logged to registries
+  docker_login:
+    username: "{{ item.username }}"
+    password: "{{ item.password }}"
+    registry: "{{ item.registry|default(omit) }}"
+    email: "{{ item.email|default(omit) }}"
+  with_items: "{{ docker_run_logins }}"
+
+- name: Ensure that docker networks are exist
+  docker_network:
+    name: "{{ item.name|default(item) }}"
+    connected: "{{ item.connected|default(omit) }}"
+  with_items: "{{ docker_run_networks }}"
+
+- name: Ensure that docker containers are running
+  docker_container:
+    name: "{{ item.name|default(item) }}"
+    image: "{{ item.image|default(item) }}"
+    command: "{{ item.command|default(omit) }}"
+    links: "{{ item.links|default(omit) }}"
+    networks: "{{ item.networks|default(omit) }}"
+    ports: "{{ item.ports|default(omit) }}"
+    volumes: "{{ item.volumes|default(omit) }}"
+    env: "{{ item.env|default(omit) }}"
+    state: "{{ item.state|default(omit) }}"
+    pull: "{{ item.pull|default(true) }}"
+    recreate: "{{ item.recreate|default(omit) }}"
+    exposed_ports: "{{ item.exposed_ports|default(omit) }}"
+    volumes_from: "{{ item.volumes_from|default(omit) }}"
+    restart: "{{ item.restart|default(omit) }}"
+    restart_policy: "{{ item.restart_policy|default(omit) }}"
+  with_items: "{{ docker_run_containers }}"
