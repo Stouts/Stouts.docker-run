@@ -14,11 +14,22 @@ Features:
 #### Variables
 
 ```yaml
-
+# Create Docker Mounts on Host
 docker_run_mounts: []
+
+# Create Docker Volumes
 docker_run_volumes: []
+
+# Login into Docker Registries
 docker_run_logins: []
+
+# Create Docker Networks
 docker_run_networks: []
+
+# Copy files on Docker Host
+docker_run_copy: []
+
+# Run Docker Containers
 docker_run_containers: []
 ```
 

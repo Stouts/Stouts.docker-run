@@ -20,6 +20,18 @@
     email: "{{ item.email|default(omit) }}"
   with_items: "{{ docker_run_logins }}"
 
+- name: Ensure that files are copied
+  copy:
+    dest: "{{ item.dest|default(omit) }}"
+    src: "{{ item.src|default(omit) }}"
+    content: "{{ item.content|default(omit) }}"
+    group: "{{ item.group|default(omit) }}"
+    owner: "{{ item.owner|default(omit) }}"
+    mode: "{{ item.mode|default(omit) }}"
+    force: "{{ item.force|default(omit) }}"
+  notify: "{{ item.handler|default(omit) }}"
+  with_items: "{{ docker_run_copy }}"
+
 - name: Ensure that docker networks are exist
   docker_network:
     name: "{{ item.name|default(item) }}"
