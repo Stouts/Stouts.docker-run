@@ -55,4 +55,5 @@
     volumes_from: "{{ item.volumes_from|default(omit) }}"
     restart: "{{ item.restart|default(omit) }}"
     restart_policy: "{{ item.restart_policy|default(omit) }}"
+  notify: "{{ item.notify|default(omit) }}"
   with_items: "{{ docker_run_containers }}"
