@@ -29,7 +29,7 @@
     owner: "{{ item.owner|default(omit) }}"
     mode: "{{ item.mode|default(omit) }}"
     force: "{{ item.force|default(omit) }}"
-  notify: "{{ item.handler|default(omit) }}"
+  notify: "{{ item.notify|default(omit) }}"
   with_items: "{{ docker_run_copy }}"
 
 - name: Ensure that docker networks are exist

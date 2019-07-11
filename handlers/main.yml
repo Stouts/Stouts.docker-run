@@ -1,0 +1,8 @@
+---
+
+- name: run restart
+  docker_container:
+    name: "{{ item.name|default(item) }}"
+    state: started
+    restart: true
+  with_items: "{{ docker_run_containers }}"
