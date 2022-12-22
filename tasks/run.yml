@@ -7,13 +7,13 @@
   with_items: "{{ docker_run_mounts }}"
 
 - name: Ensure that docker volumes are exists
-  docker_volume:
+  community.docker.docker_volume:
     name: "{{ item.name|default(item) }}"
     force: "{{ item.force|default(omit) }}"
   with_items: "{{ docker_run_volumes }}"
 
 - name: Ensure that docker is logged to registries
-  docker_login:
+  community.docker.docker_login:
     username: "{{ item.username }}"
     password: "{{ item.password }}"
     registry: "{{ item.registry|default(omit) }}"
@@ -33,13 +33,13 @@
   with_items: "{{ docker_run_copy }}"
 
 - name: Ensure that docker networks are exist
-  docker_network:
+  community.docker.docker_network:
     name: "{{ item.name|default(item) }}"
     connected: "{{ item.connected|default(omit) }}"
   with_items: "{{ docker_run_networks }}"
 
 - name: Ensure that docker containers are running
-  docker_container:
+  community.docker.docker_container:
     api_version: "{{ item.api_version|default(omit) }}"
     auto_remove: "{{ item.auto_remove|default(omit) }}"
     command: "{{ item.command|default(omit) }}"
