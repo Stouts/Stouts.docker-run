@@ -17,3 +17,6 @@ docker_run_copy: []
 
 # Run Docker Containers
 docker_run_containers: []
+
+# Container defaults
+docker_run_defaults: {}
