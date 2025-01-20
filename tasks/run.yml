@@ -20,7 +20,7 @@
     email: "{{ item.email|default(omit) }}"
   with_items: "{{ docker_run_logins }}"
 
-- name: Ensure that files are copied
+- name: Ensure that files are copied pt. 1
   copy:
     dest: "{{ item.dest|default(omit) }}"
     src: "{{ item.src|default(omit) }}"
@@ -30,6 +30,19 @@
     mode: "{{ item.mode|default(omit) }}"
     force: "{{ item.force|default(omit) }}"
   notify: "{{ item.notify|default(omit) }}"
+  when: not item.get('template')
+  with_items: "{{ docker_run_copy }}"
+
+- name: Ensure that files are copied pt. 2
+  template:
+    dest: "{{ item.dest|default(omit) }}"
+    src: "{{ item.template }}"
+    group: "{{ item.group|default(omit) }}"
+    owner: "{{ item.owner|default(omit) }}"
+    mode: "{{ item.mode|default(omit) }}"
+    force: "{{ item.force|default(omit) }}"
+  notify: "{{ item.notify|default(omit) }}"
+  when: item.get('template')
   with_items: "{{ docker_run_copy }}"
 
 - name: Ensure that docker networks are exist
@@ -63,5 +76,6 @@
     tty: "{{ item.tty|default(omit) }}"
     volumes: "{{ item.volumes|default(omit) }}"
     volumes_from: "{{ item.volumes_from|default(omit) }}"
+  when: not item.get('disabled')
   notify: "{{ item.notify|default(omit) }}"
   with_items: "{{ docker_run_containers }}"
