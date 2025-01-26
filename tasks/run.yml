@@ -61,6 +61,7 @@
     hostname: "{{ item.hostname|default(omit) }}"
     image: "{{ item.image|default(item) }}"
     kill_signal: "{{ item.kill_signal|default(omit) }}"
+    log_driver: "{{ item.log_driver|default('local') }}"
     labels: "{{ item.labels|default(omit) }}"
     links: "{{ item.links|default(omit) }}"
     name: "{{ item.name|default(item) }}"

@@ -6,3 +6,8 @@
     state: started
     restart: true
   with_items: "{{ docker_run_containers }}"
+
+- name: restart docker
+  service:
+    name: docker
+    state: restarted
